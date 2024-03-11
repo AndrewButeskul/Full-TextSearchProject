@@ -10,7 +10,7 @@ namespace FullTextProject
     {
         public static IEnumerable<string> GetDataSet()
         {
-            return ReadDataSet("articles1.csv");
+            return ReadDataSet("articles_content.csv");
         }
         public static IEnumerable<string> ReadDataSet(string fileName)
         {
