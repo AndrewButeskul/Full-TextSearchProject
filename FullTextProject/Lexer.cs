@@ -8,6 +8,7 @@ namespace FullTextProject
 {
     public class Lexer
     {
+        // Tokenization process
         public IEnumerable<string> GetTokens(string text)
         {
             int start = -1;
@@ -15,7 +16,7 @@ namespace FullTextProject
             {
                 if (char.IsLetterOrDigit(text[i]))
                 {
-                    // in case when word hasn't started, we note the beginning of this word
+                    // when word hasn't started, we note the beginning of this word
                     if (start == -1)
                         start = i;
                 }
@@ -23,6 +24,7 @@ namespace FullTextProject
                 {
                     if (start >= 0)
                     {
+                        // return word after the point when we've noted the beginning
                         yield return GetToken(text, i, start);
                         start = -1;
                     }

@@ -17,7 +17,7 @@ namespace FullTextProject.Benchmarks
        
         public SearchBenchmark() 
         {
-            _dataset = ExtractorString.GetDataSet().ToArray();
+            _dataset = ExtractorString.GetDataSet().Take(2_000).ToArray();
 
             _indexRecordLevel = new();
 
@@ -26,11 +26,12 @@ namespace FullTextProject.Benchmarks
                 _indexRecordLevel.AddStringToIndex(item);
             }
         }
-        // Quantity of words:
+
+        // Quantity of words in docs:
         //Tech [616], rich [1108], total [3524], personal[5222], News [14_762]
 
         [Params("Tech", "total", "News")]
-        public string Query {  get; set; }
+        public string Query { get; set; }
 
         // to compare searchers, we'll consider BasicSearch like BaseLine
         [Benchmark(Baseline = true)]

@@ -14,6 +14,7 @@ namespace FullTextProject.Searchers
         private readonly BasicSearcher _searcher = new BasicSearcher();
         public FTSRecordLevel() { }
 
+        // Inverted index: Record-level
         public void AddStringToIndex(string text)
         {
             int documentId = _content.Count;

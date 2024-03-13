@@ -10,7 +10,7 @@ namespace FullTextProject.Searchers
     {
         public IEnumerable<string> Search(string word, string item)
         {
-            Console.WriteLine(new string('-', 10) + " Docs doesn't have searched word " + new string('-', 50));
+            Console.WriteLine(new string('-', 100));
             int position = 0;
             while (true)
             {
