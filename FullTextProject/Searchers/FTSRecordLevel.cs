@@ -3,18 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FullTextProject.Common;
 
 namespace FullTextProject.Searchers
 {
+    // Structure of Index
+    // {
+    //   "news" : [455, 5643, 4562, 2102]
+    // {
     public class FTSRecordLevel
     {
         private readonly Dictionary<string, HashSet<int>> _index = new Dictionary<string, HashSet<int>>();
         private readonly List<string> _content = new List<string>();
-        private readonly Lexer _lexer = new Lexer();
+        private readonly Lexer _lexer = new();
         private readonly BasicSearcher _searcher = new BasicSearcher();
         public FTSRecordLevel() { }
 
-        // Inverted index: Record-level
+        // Building Inverted Index: Record-level
         public void AddStringToIndex(string text)
         {
             int documentId = _content.Count;
@@ -44,12 +49,12 @@ namespace FullTextProject.Searchers
             return Enumerable.Empty<int>();
         }
 
-        /// <summary>
+         /// <summary>
         /// Using BasicSearcer finds searched words only among documents that have these words
         /// </summary>
         /// <param name="word"></param>
         /// <returns></returns>
-        public IEnumerable<string> EfficientSearch(string word)
+        public IEnumerable<string> SearchTest(string word)
         {
             var documentList = Search(word);
             foreach (var documentId in documentList)

@@ -14,26 +14,28 @@ namespace FullTextProject.Benchmarks
     {
         private readonly string[] _dataset;
         private readonly FTSRecordLevel _indexRecordLevel;
+        private readonly FTSWordLevel _indexWordLevel;
        
         public SearchBenchmark() 
         {
-            _dataset = ExtractorString.GetDataSet().Take(2_000).ToArray();
+            _dataset = ExtractorString.GetDataSet().ToArray();
 
+            // initializing indexes
             _indexRecordLevel = new();
+            _indexWordLevel = new();
 
             foreach (var item in _dataset)
             {
                 _indexRecordLevel.AddStringToIndex(item);
+                _indexWordLevel.AddStringToIndex(item);
             }
         }
 
-        // Quantity of words in docs:
-        //Tech [616], rich [1108], total [3524], personal[5222], News [14_762]
-
-        [Params("Tech", "total", "News")]
+        
+        [Params("electronic", "future", "news")]
         public string Query { get; set; }
 
-        // to compare searchers, we'll consider BasicSearch like BaseLine
+        // to compare searchers, we'll consider BasicSearch like '1'
         [Benchmark(Baseline = true)]
         public void BasicSearch()
         {
@@ -43,7 +45,13 @@ namespace FullTextProject.Benchmarks
         [Benchmark]
         public void FullTextRecordLevelSearch()
         {
-            _indexRecordLevel.EfficientSearch(Query).ToArray();
+            _indexRecordLevel.SearchTest(Query).ToArray();
+        }
+
+        [Benchmark]
+        public void FullTextWordLevelSearch()
+        {
+            _indexWordLevel.SearchTest(Query).ToArray();
         }
     }
 }

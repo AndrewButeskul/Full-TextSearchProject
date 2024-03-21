@@ -1,14 +1,49 @@
-﻿
-using FullTextProject;
+﻿using FullTextProject;
+using FullTextProject.Searchers;
 using BenchmarkDotNet.Running;
 using FullTextProject.Benchmarks;
 
-//var list = ExtractorString.GetDataSet().Take(20_000).ToArray();
+var dataset = ExtractorString.GetDataSet().ToArray();
+string searchedWord = "government";
 
-//var searcher = new BasicSearcher();
+// ---------------------------------------------------------------
 
-//searcher.Search("News", list);
+//TestBasicSearch(dataset, searchedWord);
+//TestFTSRecordLevel(dataset, searchedWord);
+//TestFTSWordLevel(dataset, searchedWord);
+
+// ---------------------------------------------------------------
 
 BenchmarkRunner.Run<SearchBenchmark>();
 
- 
+// ---------------------------------------------------------------
+static void TestFTSWordLevel(string[] dataset, string searchedWord)
+{
+    var wordLevel = new FTSWordLevel();
+
+    foreach (var item in dataset)
+    {
+        wordLevel.AddStringToIndex(item);
+    }
+
+    var resultList = wordLevel.SearchTest(searchedWord).ToArray();
+
+    //Console.WriteLine($"Count: {resultList.Count()}");
+}
+static void TestFTSRecordLevel(string[] dataset, string searchedWord)
+{
+    var recordLevel = new FTSRecordLevel();
+
+    foreach (var item in dataset)
+    {
+        recordLevel.AddStringToIndex(item);
+    }
+
+    var resultList = recordLevel.SearchTest(searchedWord).ToArray();
+}
+static void TestBasicSearch(string[] dataset, string searchedWord)
+{
+    var basicSearcher = new BasicSearcher();
+
+    var resultList = basicSearcher.Search(searchedWord, dataset).ToArray();
+}
