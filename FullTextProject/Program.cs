@@ -14,7 +14,8 @@ using FullTextProject.Benchmarks;
 
 // ---------------------------------------------------------------
 
-BenchmarkRunner.Run<SearchBenchmark>();
+//BenchmarkRunner.Run<SearchBenchmark>();
+BenchmarkRunner.Run<BuildIndexBenchmark>();
 
 // ---------------------------------------------------------------
 static void TestFTSWordLevel(string[] dataset, string searchedWord)

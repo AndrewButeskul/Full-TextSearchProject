@@ -9,12 +9,14 @@ namespace FullTextProject.Searchers
 {
     public class BasicSearcher
     {
-        public IEnumerable<string> Search(string word, string line)
+        public IEnumerable<string> Search(string word, string line, int start = 0, int end = -1)
         {
-            int position = 0;
+            int position = start;
             while (true)
             {
-                position = line.IndexOf(word, position);
+                position = end == -1 ? line.IndexOf(word, position)
+                    : line.IndexOf(word, position, end - position);
+
                 if (position >= 0)
                 {
                     yield return Frame.FrameMatch(line, position);

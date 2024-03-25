@@ -1,5 +1,6 @@
 ﻿using BenchmarkDotNet.Attributes;
 using FullTextProject.Searchers;
+using FullTextProject.Searchers.FragmentSearcher;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,19 +16,22 @@ namespace FullTextProject.Benchmarks
         private readonly string[] _dataset;
         private readonly FTSRecordLevel _indexRecordLevel;
         private readonly FTSWordLevel _indexWordLevel;
+        private readonly FragmentSearcher _indexFragment;
        
         public SearchBenchmark() 
         {
-            _dataset = ExtractorString.GetDataSet().Take(20_000).ToArray();
+            _dataset = ExtractorString.GetDataSet().ToArray();
 
             // initializing indexes
             _indexRecordLevel = new();
             _indexWordLevel = new();
+            _indexFragment = new();
 
             foreach (var item in _dataset)
             {
                 _indexRecordLevel.AddStringToIndex(item);
                 _indexWordLevel.AddStringToIndex(item);
+                _indexFragment.AddStringToIndex(item);
             }
         }
 
@@ -52,6 +56,12 @@ namespace FullTextProject.Benchmarks
         public void FullTextWordLevelSearch()
         {
             _indexWordLevel.SearchTest(Query).ToArray();
+        }
+
+        [Benchmark]
+        public void FragmentBasedSearch()
+        {
+            _indexFragment.SearchTest(Query).ToArray();
         }
     }
 }
