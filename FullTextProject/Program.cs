@@ -3,8 +3,8 @@ using FullTextProject.Searchers;
 using BenchmarkDotNet.Running;
 using FullTextProject.Benchmarks;
 
-var dataset = ExtractorString.GetDataSet().ToArray();
-string searchedWord = "government";
+//var dataset = ExtractorString.GetDataSet().Take(5000).ToArray();
+//string searchedWord = "government";
 
 // ---------------------------------------------------------------
 
@@ -28,7 +28,7 @@ static void TestFTSWordLevel(string[] dataset, string searchedWord)
 
     var resultList = wordLevel.SearchTest(searchedWord).ToArray();
 
-    //Console.WriteLine($"Count: {resultList.Count()}");
+    Console.WriteLine($"Count: {resultList.Count()}");
 }
 static void TestFTSRecordLevel(string[] dataset, string searchedWord)
 {
@@ -40,10 +40,14 @@ static void TestFTSRecordLevel(string[] dataset, string searchedWord)
     }
 
     var resultList = recordLevel.SearchTest(searchedWord).ToArray();
+
+    Console.WriteLine($"Count: {resultList.Count()}");
 }
 static void TestBasicSearch(string[] dataset, string searchedWord)
 {
     var basicSearcher = new BasicSearcher();
 
     var resultList = basicSearcher.Search(searchedWord, dataset).ToArray();
+
+    Console.WriteLine($"Count: {resultList.Count()}");
 }

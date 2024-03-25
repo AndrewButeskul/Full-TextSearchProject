@@ -9,15 +9,15 @@ namespace FullTextProject.Searchers
 {
     public class BasicSearcher
     {
-        public IEnumerable<string> Search(string word, string item)
+        public IEnumerable<string> Search(string word, string line)
         {
             int position = 0;
             while (true)
             {
-                position = item.IndexOf(word, position);
+                position = line.IndexOf(word, position);
                 if (position >= 0)
                 {
-                    yield return Frame.FrameMatch(item, position);
+                    yield return Frame.FrameMatch(line, position);
                 }
                 else
                 {
@@ -28,9 +28,9 @@ namespace FullTextProject.Searchers
         }
         public IEnumerable<string> Search(string word, IEnumerable<string> stringsToSearch)
         {
-            foreach (var item in stringsToSearch)
+            foreach (var line in stringsToSearch)
             {
-               foreach(var match in Search(word, item))
+               foreach(var match in Search(word, line))
                 {
                     yield return match;
                 }

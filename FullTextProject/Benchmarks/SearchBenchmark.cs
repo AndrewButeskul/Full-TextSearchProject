@@ -18,7 +18,7 @@ namespace FullTextProject.Benchmarks
        
         public SearchBenchmark() 
         {
-            _dataset = ExtractorString.GetDataSet().ToArray();
+            _dataset = ExtractorString.GetDataSet().Take(20_000).ToArray();
 
             // initializing indexes
             _indexRecordLevel = new();
@@ -32,7 +32,7 @@ namespace FullTextProject.Benchmarks
         }
 
         
-        [Params("electronic", "future", "news")]
+        [Params("electronic", "future", "government")]
         public string Query { get; set; }
 
         // to compare searchers, we'll consider BasicSearch like '1'
